@@ -1,0 +1,38 @@
+def f(r, b, g, prev):
+ 
+    # base case: invalid number of balls
+    if r < 0 or b < 0 or g < 0:
+        return 0
+ 
+    # base case: all balls are exhausted
+    if r == 0 and b == 0 and g == 0:
+        return 1
+ 
+    # if the last ball was red
+    if prev == 'r':
+        # current ball can be either blue or green… recur with one less ball
+        return f(r, b - 1, g, 'b') + f(r, b, g - 1, 'g')
+ 
+    # if the last ball was blue
+    if prev == 'b':
+        # current ball can be either red or green… recur with one less ball
+        return f(r - 1, b, g, 'r') + f(r, b, g - 1, 'g')
+ 
+    # if the last ball was green
+    if prev == 'g':
+        # current ball can be either red or blue… recur with one less ball
+        return f(r - 1, b, g, 'r') + f(r, b - 1, g, 'b')
+ 
+ 
+# Wrapper over function `f()`
+def totalWays(r, b, g):
+    return f(r - 1, b, g, 'r') + f(r, b - 1, g, 'b') + f(r, b, g - 1, 'g')
+ 
+ 
+
+r=int(input())
+b=int(input())
+g=int(input())
+ 
+print("The total number of distinct arrangements are", totalWays(r, b, g))
+ 
